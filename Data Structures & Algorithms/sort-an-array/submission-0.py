@@ -1,0 +1,45 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        self.quickSort(nums, 0, len(nums)-1)
+        return nums
+    def quickSort(self, nums, left, right):
+        if right <=left+1:
+            if right == left+1 and nums[right]< nums[left]:
+                nums[left], nums[right] = nums[right], nums[left]
+            return 
+        j=self.partition(nums, left, right)
+        self.quickSort(nums, left, j-1)
+        self.quickSort(nums, j+1, right)
+
+    def partition(self, nums, left, right):
+        mid=(left +right)>>1
+        nums[mid], nums[left+1]= nums[left+1], nums[mid]
+
+        if nums[left]> nums[right]:
+            nums[left], nums[right]= nums[right], nums[left]
+        if nums[left+1]> nums[right]:
+            nums[left+1], nums[right] = nums[right], nums[left+1]
+        if nums[left]> nums[left+1]:
+            nums[left], nums[left+1] = nums[left+1], nums[left]
+
+        pivot = nums[left+1]
+        i=left+1
+        j=right
+
+        while True:
+            while True:
+                i+=1
+                if not nums[i]<pivot:
+                    break
+            while True:
+                j-=1
+                if not nums[j]>pivot:
+                    break
+            if i>j:
+                break
+            nums[i], nums[j]=nums[j], nums[i]
+        nums[left+1], nums[j] = nums[j], nums[left+1]
+        return j
+
+
+        
